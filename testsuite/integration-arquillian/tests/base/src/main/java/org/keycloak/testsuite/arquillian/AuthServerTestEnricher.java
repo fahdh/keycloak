@@ -460,7 +460,7 @@ public class AuthServerTestEnricher {
         testContextProducer.set(testContext);
 
         if (event.getTestClass().isAnnotationPresent(EnableVault.class)) {
-            VaultUtils.enableVault(suiteContext);
+            VaultUtils.enableVault(suiteContext, event.getTestClass().getAnnotation(EnableVault.class).providerId());
             restartAuthServer();
             testContext.reconnectAdminClient();
         }
@@ -544,6 +544,10 @@ public class AuthServerTestEnricher {
         suiteContext.getServerLogChecker().updateLastCheckedPositionsOfAllFilesToEndOfFile();
     }
 
+    public void startTestClassProvider(@Observes(precedence = 100) BeforeSuite beforeSuite) {
+        new TestClassProvider().start();
+    }
+
     private static final Pattern UNEXPECTED_UNCAUGHT_ERROR = Pattern.compile(
       KeycloakErrorHandler.class.getSimpleName()
         + ".*"
@@ -581,7 +585,7 @@ public class AuthServerTestEnricher {
         removeTestRealms(testContext, adminClient);
 
         if (event.getTestClass().isAnnotationPresent(EnableVault.class)) {
-            VaultUtils.disableVault(suiteContext);
+            VaultUtils.disableVault(suiteContext, event.getTestClass().getAnnotation(EnableVault.class).providerId());
             restartAuthServer();
             testContext.reconnectAdminClient();
         }
