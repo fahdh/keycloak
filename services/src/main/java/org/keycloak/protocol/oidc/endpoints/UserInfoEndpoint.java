@@ -225,9 +225,9 @@ public class UserInfoEndpoint {
 
         event.success();
 
-        return Cors.add(request, responseBuilder).auth().allowedOrigins(token).build();
+        // KEYCLOAK-9925 - Client Web Origins are ignored by /userinfo endpoint
+        return Cors.add(request, responseBuilder).auth().allowedOrigins(session.getContext().getUri(), clientModel).build();
     }
-
 
     private UserSessionModel findValidSession(AccessToken token, EventBuilder event, ClientModel client) {
         UserSessionModel userSession = new UserSessionCrossDCManager(session).getUserSessionWithClient(realm, token.getSessionState(), false, client.getId());
