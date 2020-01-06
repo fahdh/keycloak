@@ -226,12 +226,7 @@ public class UserInfoEndpoint {
         event.success();
 
         // KEYCLOAK-9925 - Client Web Origins are ignored by /userinfo endpoint
-        if (token.getAllowedOrigins() == null) {
-            //logger.log(Level.INFO, "allowedOrigins not found in token. Using ClientModel to build CORS.");
-            return Cors.add(request, responseBuilder).auth().allowedOrigins(session.getContext().getUri(), clientModel).build();
-        }
-
-        return Cors.add(request, responseBuilder).auth().allowedOrigins(token).build();
+        return Cors.add(request, responseBuilder).auth().allowedOrigins(session.getContext().getUri(), clientModel).build();
     }
 
 
