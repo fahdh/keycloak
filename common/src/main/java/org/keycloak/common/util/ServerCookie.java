@@ -238,6 +238,9 @@ public class ServerCookie implements Serializable {
             buf.append("; HttpOnly");
         }
 
+        // SameSite
+        buf.append("; SameSite=Lax");
+
         headerBuf.append(buf);
     }
 
