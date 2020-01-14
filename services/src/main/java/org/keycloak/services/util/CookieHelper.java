@@ -56,10 +56,12 @@ public class CookieHelper {
      * @param httpOnly
      * @param samesite
      */
-    public static void addCookie(String name, String value, String path, String domain, String comment, int maxAge, boolean secure, boolean httpOnly, SAMESITE samesite) {
+    public static void addCookie(String name, String value, String path, String domain, String comment, int maxAge, boolean secure, boolean httpOnly, SAME_SITE sameSite) {
+        boolean secure_sameSite = sameSite == SAME_SITE.NONE || secure; // when SameSite=None, Secure attribute must be set
+
         HttpResponse response = Resteasy.getContextData(HttpResponse.class);
         StringBuffer cookieBuf = new StringBuffer();
-        ServerCookie.appendCookieValue(cookieBuf, 1, name, value, path, domain, comment, maxAge, secure, httpOnly);
+        ServerCookie.appendCookieValue(cookieBuf, 1, name, value, path, domain, comment, maxAge, secure_sameSite, httpOnly, sameSite);
         String cookie = cookieBuf.toString();
         response.getOutputHeaders().add(HttpHeaders.SET_COOKIE, cookie);
 
