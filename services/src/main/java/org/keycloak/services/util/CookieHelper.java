@@ -55,6 +55,10 @@ public class CookieHelper {
 
     private static final Logger logger = Logger.getLogger(CookieHelper.class);
 
+    public enum SAMESITE {
+        NONE // we currently support only SameSite=None; this might change in the future
+    }
+
     /**
      * Set a response cookie.  This solely exists because JAX-RS 1.1 does not support setting HttpOnly cookies
      * @param name
