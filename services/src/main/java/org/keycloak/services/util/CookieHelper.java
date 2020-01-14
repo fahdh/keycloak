@@ -62,6 +62,11 @@ public class CookieHelper {
         ServerCookie.appendCookieValue(cookieBuf, 1, name, value, path, domain, comment, maxAge, secure, httpOnly);
         String cookie = cookieBuf.toString();
         response.getOutputHeaders().add(HttpHeaders.SET_COOKIE, cookie);
+
+        // a workaround for browser in older Apple OSs – browsers ignore cookies with SameSite=None
+        if (sameSiteParam == SAME_SITE.NONE) {
+            addCookie(name + LEGACY_COOKIE, value, path, domain, comment, maxAge, secure, httpOnly, null);
+        }
     }
 
 
