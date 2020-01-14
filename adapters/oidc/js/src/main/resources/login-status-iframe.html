@@ -88,9 +88,8 @@
         return cookie;
     }
 
-    function getCookieByName(name)
+    function getCookie(name)
     {
-        name = name + '=';
         var ca = document.cookie.split(';');
         for(var i=0; i<ca.length; i++)
         {
