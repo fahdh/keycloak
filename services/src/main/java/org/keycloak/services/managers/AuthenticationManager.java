@@ -96,9 +96,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.keycloak.common.util.ServerCookie.SAME_SITE;
-import static org.keycloak.services.util.CookieHelper.getCookie;
-
 /**
  * Stateless object that manages authentication
  *

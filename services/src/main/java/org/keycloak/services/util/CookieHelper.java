@@ -61,7 +61,7 @@ public class CookieHelper {
 
     /**
      * Set a response cookie.  This solely exists because JAX-RS 1.1 does not support setting HttpOnly cookies
-     * @param name
+     *  @param name
      * @param value
      * @param path
      * @param domain
@@ -69,18 +69,9 @@ public class CookieHelper {
      * @param maxAge
      * @param secure
      * @param httpOnly
-     * @param sameSite
+     * @param samesite
      */
-    public static void addCookie(String name, String value, String path, String domain, String comment, int maxAge, boolean secure, boolean httpOnly, SameSiteAttributeValue sameSite) {
-        SameSiteAttributeValue sameSiteParam = sameSite;
-        // when expiring a cookie we shouldn't set the sameSite attribute; if we set e.g. SameSite=None when expiring a cookie, the new cookie (with maxAge == 0)
-        // might be rejected by the browser in some cases resulting in leaving the original cookie untouched; that can even prevent user from accessing their application
-        if (maxAge == 0) {
-            sameSite = null;
-        }
-
-        boolean secure_sameSite = sameSite == SameSiteAttributeValue.NONE || secure; // when SameSite=None, Secure attribute must be set
-
+    public static void addCookie(String name, String value, String path, String domain, String comment, int maxAge, boolean secure, boolean httpOnly, SAMESITE samesite) {
         HttpResponse response = Resteasy.getContextData(HttpResponse.class);
         StringBuffer cookieBuf = new StringBuffer();
         ServerCookie.appendCookieValue(cookieBuf, 1, name, value, path, domain, comment, maxAge, secure_sameSite, httpOnly, sameSite);
