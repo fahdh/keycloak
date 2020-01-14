@@ -42,6 +42,8 @@ import java.util.stream.Collectors;
 
 import static org.keycloak.common.util.ServerCookie.SameSiteAttributeValue;
 
+import static org.keycloak.common.util.ServerCookie.SAME_SITE;
+
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
